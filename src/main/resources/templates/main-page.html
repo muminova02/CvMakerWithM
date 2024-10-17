@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create CV</title>
+    <style>
+        /* Basic reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            padding: 20px;
+        }
+
+        /* Container for the CV list */
+        .cv-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        /* Style for each CV card */
+        .cv-card {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        /* CV card hover effect */
+        .cv-card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styling for the content inside the CV card */
+        .cv-card p {
+            margin-bottom: 10px;
+            font-size: 16px;
+            color: #333;
+        }
+
+        /* Button for creating a CV */
+        .create-cv-btn {
+            display: block;
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .create-cv-btn button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .create-cv-btn button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Responsive layout for smaller screens */
+        @media (max-width: 768px) {
+            .cv-card {
+                width: 48%;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .cv-card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="cv-container">
+    <div class="cv-card" th:each="cvDto: ${cvListDto}">
+        <p th:text="*{cvDto.fullName}">John Doe</p>
+        <p th:text="${cvDto.getJobTitle()}">Software Engineer</p>
+        <div class="create-cv-btn">
+            <a th:href="@{/cv/show/{id}(id=${cvDto.id})}">
+                <button>Show CV</button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div class="create-cv-btn">
+    <a th:href="@{/cv/create/{id}(id=${userId})}">
+        <button>Create CV</button>
+    </a>
+</div>
+
+</body>
+</html>

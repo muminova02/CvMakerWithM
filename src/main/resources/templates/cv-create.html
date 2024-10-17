@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Create CV</title>
+
+    <style>
+        .education-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            padding: 10px 0;
+        }
+
+        .education-entry {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+            transition: background-color 0.3s ease;
+        }
+
+        .education-entry:hover {
+            background-color: #f1f1f1;
+        }
+
+        .university-name {
+            font-size: 18px;
+            font-weight: 600;
+            color: #333;
+            margin: 0;
+        }
+
+        .delete-form {
+            display: flex;
+            justify-content: flex-end;
+            margin: 0;
+        }
+
+        .delete-btn {
+            background-color: #ff4d4d;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: background-color 0.3s ease;
+        }
+
+        .delete-btn:hover {
+            background-color: #e60000;
+        }
+
+        .profile-section {
+            padding: 20px;
+        }
+
+        .upload-section {
+            margin: 30px auto;
+            text-align: center;
+
+        }
+
+        #profileImage {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 10px;
+        }
+
+        .input-fields {
+            flex-basis: 60%;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .row label {
+            flex-basis: 25%;
+            margin-right: 10px;
+            margin-left: 10px;
+        }
+
+        .row input, .row textarea {
+
+            flex-basis: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        #uploadBtn, #removeBtn {
+            margin-top: 10px;
+        }
+        .education-section {
+            padding: 20px;
+        }
+
+        .education-section h2 {
+            color: #0033cc;
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .row label {
+            flex-basis: 25%;
+            margin-right: 10px;
+        }
+
+        .row input {
+            flex-basis: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-education-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-education-btn:hover {
+            background-color: #0056b3;
+        }
+        .add-inform-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-inform-btn:hover {
+            background-color: #0056b3;
+        }
+        .experience-section {
+            padding: 20px;
+        }
+
+
+        .experience-section h2 {
+            color: #0033cc;
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .row label {
+            flex-basis: 25%;
+            margin-right: 10px;
+        }
+
+        .row input, .row textarea {
+            flex-basis: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        textarea {
+            resize: none;
+            height: 80px;
+        }
+
+        .add-experience-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-experience-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .skills-section {
+            padding: 20px;
+        }
+
+        .skills-section h2 {
+            color: #0033cc;
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .row label {
+            flex-basis: 25%;
+            margin-right: 10px;
+        }
+
+        .row input, .row select {
+            flex-basis: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-skill-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-skill-btn:hover {
+            background-color: #0056b3;
+        }
+        .social-links-section {
+            padding: 20px;
+        }
+
+        .social-links-section h2 {
+            color: #0033cc;
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .row label {
+            flex-basis: 25%;
+            margin-right: 10px;
+        }
+
+        .row input {
+            flex-basis: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-social-link-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-social-link-btn:hover {
+            background-color: #0056b3;
+        }
+
+        .languages-section {
+            padding: 20px;
+        }
+
+        .languages-section h2 {
+            color: #0033cc;
+            margin-bottom: 15px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+
+        .row label {
+            flex-basis: 25%;
+            margin-right: 10px;
+        }
+
+        .row input,
+        .row select {
+            flex-basis: 70%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        .add-language-btn {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .add-language-btn:hover {
+            background-color: #0056b3;
+        }
+
+    </style>
+</head>
+<body style="background-color: blanchedalmond;">
+<div class="create-resume" style="max-width: 850px; margin: 100px auto; background-color: rgba(255, 255, 255, 0.727); border-radius: 20px; box-shadow: 0px 3px 16px 0px rgb(0 0 0/10%); padding: 15px;">
+
+    <h2>Create Your Profile</h2>
+    <!-- CV Form -->
+    <form th:action="@{/cv/create/inform/{id}(id=${cv.id})}" method="post" th:object="${cv}">
+        <!-- Profile Section -->
+        <div class="profile-section" style="background-color: #ffffff;
+        box-shadow: 0px 3px 16px 0px rgb(0 0 0/10%); margin: 15px 30px;">
+            <div class="upload-section" style="display: block;">
+                <img th:if="${cv.photoName != null}"
+                     th:src="@{/uploads/${cv.photoName}}"
+                     alt="Profile Picture"
+                     id="profileImage1"
+                     style="width: 300px; height: 300px;">
+
+                <img th:if="${cv.photoName == null}"
+                     th:src="@{/image.png}"
+                     alt="Profile Picture"
+                     id="profileImage"
+                     style="width: 300px; height: 300px;">
+                <label for="fileInput">Upload your picture</label>
+                <p>For best results, use image 300px by 300px in either .jpg or .png</p>
+
+                <!-- Hidden file input -->
+                <input type="text" id="fileInput" name="profileImage" value="image.png" style="display: none;" accept=".jpg, .jpeg, .png">
+
+                <!-- Custom upload and remove buttons -->
+                <button type="button" id="uploadBtn">Upload</button>
+                <button type="button" id="removeBtn">Remove</button>
+            </div>
+            <div class="input-fields">
+                <div class="row">
+                <label for="fullName">Full Name:</label>
+                <input type="text" id="fullName" name="fullName" th:field="*{fullName}" placeholder="Enter your name">
+
+                <label for="jobTitleBase">Job Title:</label>
+                <input type="text" id="jobTitleBase" name="jobTitle" th:field="*{jobTitle}" placeholder="Ex: Web Developer">
+                </div>
+                <div class="row">
+                    <label for="address">Your Address:</label>
+                    <input type="text" id="address" name="address" th:field="*{address}" placeholder="Enter your address">
+
+                    <label for="email">Your Email:</label>
+                    <input type="email" id="email" name="email" th:field="*{email}" placeholder="Enter your email">
+                </div>
+                <div class="row">
+                    <label for="website">Website Link:</label>
+                    <input type="url" id="website" name="website" th:field="*{websiteLink}" placeholder="Enter your website link">
+
+                    <label for="phone">Phone No:</label>
+                    <input type="tel" id="phone" name="phone" th:field="*{phoneNumber}" placeholder="Ex: Web Developer">
+                </div>
+                <div class="row">
+                    <label for="bio">Your Bio Here</label>
+                    <textarea id="bio" name="bio" th:field="*{yourBio}" placeholder="About Me"></textarea>
+                </div>
+            </div>
+            <div class="row">
+                <button type="submit" class="add-inform-btn"> submit </button>
+            </div>
+        </div>
+
+    </form>
+        <!-- Education Section -->
+        <div class="education-section" style="padding-left: 30px; padding-right: 40px; background-color: #ffffff;
+    box-shadow: 0px 3px 16px 0px rgb(0 0 0/10%);  margin: 15px 30px;">
+            <h2>Education</h2>
+            <div th:if="${cv.education != null and !cv.education.isEmpty()}">
+                <div th:each="education : *{cv.education}" class="education-list">
+                    <div class="education-entry">
+                        <p class="university-name" th:text="${education.universityName}"></p>
+                        <p class="university-name" th:text="${education.fieldStudy}"></p>
+                        <form th:action="@{|/cv/create/education/${cv.id}/delete|}" method="post" class="delete-form">
+                            <input type="hidden" name="educationId" th:value="${education.id}">
+                            <input type="submit" class="delete-btn" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <h3 style="margin-left: 30px; margin-top: 20px"> Add Education</h3>
+            <form id="education-form" th:action="@{/cv/create/education/{id}(id=${cv.id})}" method="post">
+                <div class="row">
+                    <label for="fieldOfStudy">Field of Study:</label>
+                    <input type="text" id="fieldOfStudy" name="fieldStudy" placeholder="Ex: Computer Science">
+                </div>
+
+                <div class="row">
+                    <label for="degree">Degree:</label>
+                    <input type="text" id="degree" name="degree" placeholder="Ex: Bachelor's">
+                </div>
+
+                <div class="row">
+                    <label for="school">School:</label>
+                    <input type="text" id="school" name="universityName" placeholder="Ex: al-albayt university">
+                </div>
+
+                <div class="row">
+                    <label   for="fromYearEducation">From Year:</label>
+                    <input style="margin-left: 10px; margin-right: 15px;" type="text" id="fromYearEducation" name="fromYear" placeholder="YYYY">
+                    <label for="toYearEducation">To Year (optional = present):</label>
+                    <input type="text" id="toYearEducation" name="toYear" placeholder="YYYY">
+                </div>
+                <div class="row">
+                    <button type="submit" class="add-education-btn" form="education-form">Add another education +</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="skills-section" style="background-color: #ffffff;
+box-shadow: 0px 3px 16px 0px rgb(0 0 0/10%); margin: 15px 30px;">
+            <h2>Skills</h2>
+            <div th:if="${cv.skills != null and !cv.skills.isEmpty()}">
+                <div th:each="skill : *{cv.skills}" class="education-list">
+                    <div class="education-entry">
+                        <p class="university-name" th:text="${skill.skill}"></p>
+                        <p class="university-name" th:text="${skill.proficiency}"></p>
+                        <form th:action="@{|/cv/create/skills/${cv.id}/delete|}" method="post" class="delete-form">
+                            <input type="hidden" name="skillId" th:value="${skill.id}">
+                            <input type="submit" class="delete-btn" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3 style="margin-left: 30px; margin-top: 20px">Add Skill</h3>
+            <form id="skills-form" th:action="@{/cv/create/skills/{id}(id=${cv.id})}" method="post">
+                <div class="row">
+                    <label for="skillName">Skill:</label>
+                    <input type="text" id="skillName" name="skill" placeholder="Ex: Java, HTML, CSS">
+                </div>
+                <div class="row">
+                    <label for="proficiencySkill">Proficiency:</label>
+                    <select id="proficiencySkill" name="proficiency">
+                        <option value="" disabled selected>Select proficiency level</option>
+                        <option value="Beginner">Beginner</option>
+                        <option value="Intermediate">Intermediate</option>
+                        <option value="Advanced">Advanced</option>
+                        <option value="Expert">Expert</option>
+                    </select>
+                </div>
+                <div class="row">
+                    <button type="submit" class="add-skill-btn" form="skills-form">Add another skill +</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Experiences Section -->
+        <div class="experience-section" style="background-color: #ffffff;
+box-shadow: 0px 3px 16px 0px rgb(0 0 0/10%); margin: 15px 30px;">
+            <h2>Experiences</h2>
+            <div th:if="${cv.experiences != null and !cv.experiences.isEmpty()}">
+                <div th:each="experience : *{cv.experiences}" class="education-list">
+                    <div class="education-entry">
+                        <p class="university-name" th:text="${experience.company}"></p>
+                        <p class="university-name" th:text="${experience.title}"></p>
+                        <form th:action="@{|/cv/create/experiences/${cv.id}/delete|}" method="post" class="delete-form">
+                            <input type="hidden" name="experienceId" th:value="${experience.id}">
+                            <input type="submit" class="delete-btn" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3 style="margin-left: 30px; margin-top: 20px">Add Experience</h3>
+            <form id="experience-form" th:action="@{/cv/create/experience/{id}(id=${cv.id})}" method="post">
+                <div class="row">
+                    <label for="jobTitle">Title:</label>
+                    <input type="text" id="jobTitle" name="title" placeholder="Ex: Web Developer">
+                </div>
+
+                <div class="row">
+                    <label for="company">Company:</label>
+                    <input type="text" id="company" name="company" placeholder="Ex: ProgressSoft">
+                </div>
+
+                <div class="row">
+                    <label for="fromYearExperience">From Year:</label>
+                    <input type="text" id="fromYearExperience" name="fromYear" placeholder="YYYY">
+                    <label for="toYearExperience">To Year (optional = present):</label>
+                    <input type="text" id="toYearExperience" name="toYear" placeholder="YYYY">
+                </div>
+
+                <div class="row">
+                    <label for="description">Description (optional):</label>
+                    <textarea id="description" name="description" placeholder="Brief description of your role"></textarea>
+                </div>
+
+                <div class="row">
+                    <button type="submit" class="add-experience-btn" form="experience-form">Add another experience +</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Social Links Section -->
+        <div class="social-links-section" style="background-color: #ffffff;
+box-shadow: 0px 3px 16px 0px rgb(0 0 0/10%); margin: 15px 30px;">
+            <h2>Social Links</h2>
+            <div th:if="${cv.socialLinks != null and !cv.socialLinks.isEmpty()}">
+                <div th:each="socialLink : *{cv.socialLinks}" class="education-list">
+                    <div class="education-entry">
+                        <p class="university-name" th:text="${socialLink.name}"></p>
+                        <p class="university-name" th:text="${socialLink.link}"></p>
+                        <form th:action="@{|/cv/create/socialLinks/${cv.id}/delete|}" method="post" class="delete-form">
+                            <input type="hidden" name="socialLinkId" th:value="${socialLink.id}">
+                            <input type="submit" class="delete-btn" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3 style="margin-left: 30px; margin-top: 20px">Add Social Link</h3>
+            <form id="socialLink-form" th:action="@{/cv/create/social-links/{id}(id=${cv.id})}" method="post">
+                <div class="row">
+                    <label for="socialName">Social Name:</label>
+                    <input type="text" id="socialName" name="name" placeholder="e.g., Facebook, LinkedIn, Twitter">
+                </div>
+
+                <div class="row">
+                    <label for="socialLink">Social Link:</label>
+                    <input type="url" id="socialLink" name="link" placeholder="e.g., https://www.facebook.com">
+                </div>
+
+<!--                <div class="row">-->
+<!--                    <label for="socialIcon">Social Icon Image (16px * 16px):</label>-->
+<!--                    <input type="file" id="socialIcon" name="socialIcon" accept="image/png, image/jpeg">-->
+<!--                </div>-->
+
+                <div class="row">
+                    <button type="submit" class="add-social-link-btn" form="socialLink-form">Add another social link +</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Languages Section -->
+        <div class="languages-section" style="background-color: #ffffff;
+box-shadow: 0px 3px 16px 0px rgb(0 0 0/10%); margin: 15px 30px;">
+            <h2>Languages</h2>
+            <div th:if="${cv.languages != null and !cv.languages.isEmpty()}">
+                <div th:each="language : *{cv.languages}" class="education-list">
+                    <div class="education-entry">
+                        <p class="university-name" th:text="${language.language}"></p>
+                        <p class="university-name" th:text="${language.level}"></p>
+                        <form th:action="@{|/cv/create/languages/${cv.id}/delete|}" method="post" class="delete-form">
+                            <input type="hidden" name="languageId" th:value="${language.id}">
+                            <input type="submit" class="delete-btn" value="Delete">
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <hr>
+            <h3 style="margin-left: 30px; margin-top: 20px">Add Language</h3>
+            <form id="language-form" th:action="@{/cv/create/language/{id}(id=${cv.id})}" method="post">
+                <div class="row">
+                    <label for="languageName">Language:</label>
+                    <input type="text" id="languageName" name="language" placeholder="e.g., English, French, Spanish">
+                </div>
+
+                <div class="row">
+                    <label for="proficiency">Proficiency Level:</label>
+                    <select id="proficiency" name="level">
+                        <option value="">Select proficiency level</option>
+                        <option value="A1">A1 - Beginner</option>
+                        <option value="A2">A2 - Elementary</option>
+                        <option value="B1">B1 - Intermediate</option>
+                        <option value="B2">B2 - Upper Intermediate</option>
+                        <option value="C1">C1 - Advanced</option>
+                        <option value="C2">C2 - Proficient</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <button type="submit" class="add-language-btn" form="language-form">Add another language +</button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Final CV Submission Button -->
+    <div class="row">
+        <form th:action="@{/cv/show/{id}(id=${cv.id})}" method="get">
+            <button type="submit" class="add-education-btn">Final result</button>
+        </form>
+    </div>
+
+
+</div>
+
+
+<script>
+    // Trigger file input when "Upload" button is clicked
+    document.getElementById('uploadBtn').addEventListener('click', function() {
+        document.getElementById('fileInput').click();
+    });
+
+    // Remove profile picture
+    document.getElementById('removeBtn').addEventListener('click', function() {
+        document.getElementById('profileImage').src = 'image.png';  // Reset to default image
+        document.getElementById('fileInput').value = ''; // Clear the file input
+    });
+
+    // Show the selected image in the img element
+    document.getElementById('fileInput').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profileImage').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+</script>
+<!--<script>-->
+<!--    // Ichki forma submit tugmasi bosilganda-->
+<!--    document.querySelector('.add-education-btn').addEventListener('click', function(event) {-->
+<!--        event.stopPropagation();  // Tashqi forma yuborilishini to'xtatish-->
+<!--    });-->
+<!--</script>-->
+</body>
+
+</html>

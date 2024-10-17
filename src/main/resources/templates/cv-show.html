@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV - [[${cv.fullName}]]</title>
+<!--    <link rel="stylesheet" href="/css/custom-style.css">-->
+    <link rel="stylesheet"  th:href="@{https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css}">
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.23/jspdf.plugin.autotable.min.js}"></script>
+    <script th:src="@{https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js}"></script>
+
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --accent-color: #e67e22;
+            --light-color: #f4f4f9;
+            --text-dark: #2c3e50;
+            --text-light: #fff;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        a{
+            text-decoration: none;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--light-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            max-width: 1100px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .left-column {
+            background: var(--primary-color);
+            padding: 40px;
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .left-column img {
+            border-radius: 50%;
+            width: 150px;
+            height: 150px;
+            object-fit: cover;
+            margin-bottom: 20px;
+            border: 3px solid var(--accent-color);
+        }
+
+        .left-column h1 {
+            margin: 15px 0;
+            font-size: 1.8rem;
+        }
+
+        .left-column h2 {
+            font-weight: 300;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .left-column .contact-info, .left-column .social-links {
+            margin-top: 20px;
+        }
+
+        .left-column .contact-info p, .left-column .social-links p {
+            margin: 10px 0;
+        }
+
+        .left-column .social-links a {
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 5px;
+            background: var(--text-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .left-column .social-links a i {
+            margin-right: 8px; /* Ikkisi orasida bo'sh joy */
+            font-size: 1.2rem;
+        }
+
+        /*.left-column .social-links a:hover {*/
+        /*    background: var(--accent-color);*/
+        /*    color: var(--text-light);*/
+        /*    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);*/
+        /*    transform: translateY(-2px);*/
+        /*}*/
+
+        a{
+            color: var(--accent-color);
+            text-decoration: none;
+        }
+
+        .left-column .social-links ul {
+            list-style: none; /* li nuqtalarini olib tashlash */
+            padding: 0; /* Har qanday bo'sh joyni olib tashlash */
+        }
+
+        .left-column .social-links ul li {
+            margin-bottom: 10px; /* Elementlar orasida bo'sh joy */
+        }
+        .right-column {
+            padding: 40px;
+        }
+
+        .section {
+            margin-bottom: 30px;
+        }
+
+        .section h2 {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .section p {
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .education, .experience, .skills, .languages {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .education-item, .experience-item {
+            margin-bottom: 15px;
+        }
+
+        .skills-list, .languages-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .skills-list li, .languages-list li {
+            margin-bottom: 10px;
+        }
+
+        .skill-bar {
+            position: relative;
+            background: #ddd;
+            border-radius: 5px;
+            overflow: hidden;
+            height: 10px;
+        }
+
+        .skill-bar span {
+            display: block;
+            height: 100%;
+            background: var(--accent-color);
+            transition: width 0.4s ease;
+        }
+
+        .languages-list li::before {
+            content: '';
+            color: var(--accent-color);
+            margin-right: 8px;
+        }
+
+        #downloadPdf{
+            display: inline-flex;
+            align-items: center;
+            margin-right: 10px;
+            color: var(--accent-color);
+            font-weight: bold;
+            font-size: 1rem;
+            padding: 8px 12px;
+            border-radius: 5px;
+            background: var(--text-light);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+        #downloadPdf:hover {
+               background: var(--accent-color);
+                color: var(--text-light);
+                box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+                transform: translateY(-2px);
+            }
+
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+
+            .left-column {
+                padding: 20px;
+            }
+
+            .right-column {
+                padding: 20px;
+            }
+
+            .section h2 {
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container" id="cvContent">
+    <!-- Left Column -->
+    <div class="left-column">
+<!--        <img th:src="@{'/images/' + ${cv.photoName}}" alt="Profile Photo">-->
+        <img th:if="${cv.photoName != null}"
+             th:src="@{/uploads/${cv.photoName}}"
+             alt="Profile Photo"
+             id="profileImage1"
+             style="width: 300px; height: 300px;">
+
+        <img th:if="${cv.photoName == null}"
+             th:src="@{/image.png}"
+             alt="Profile Photo"
+             id="profileImage"
+             style="width: 300px; height: 300px;">
+        <h1 th:text="${cv.fullName}"></h1>
+        <h2 style="font-family: Impact,serif" th:text="${cv.jobTitle}"></h2>
+        <div class="contact-info">
+            <p><strong>Phone:</strong> <span th:text="${cv.phoneNumber}"></span></p>
+            <p><strong>Email:</strong> <span th:text="${cv.email}"></span></p>
+            <p><strong>Website:</strong> <a th:href="${cv.websiteLink}" th:text="${cv.websiteLink}"></a></p>
+            <p><strong>Address:</strong> <span th:text="${cv.address}"></span></p>
+        </div>
+        <div class="social-links">
+            <h2>Social Links</h2>
+            <ul>
+                <li th:each="social : ${cv.socialLinks}">
+                    <i class="fab fa-telegram-plane"></i>
+                    <a th:href="${social.link}" target="_blank" th:text="${social.link}">
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="right-column">
+        <!-- Bio Section -->
+        <div class="section">
+            <h2>About Me</h2>
+            <p th:text="${cv.yourBio}"></p>
+        </div>
+
+        <!-- Education Section -->
+        <div class="section education">
+            <h2>Education</h2>
+            <div th:each="edu : ${cv.education}" class="education-item">
+                <p><strong th:text="${edu.universityName}"></strong> | <span th:text="${edu.degree}"></span></p>
+                <p th:text="${edu.fieldStudy}"></p>
+                <p th:text="'(' + ${edu.fromYear} + ' - ' + ${edu.toYear} + ')'"></p>
+            </div>
+        </div>
+
+        <!-- Work Experience Section -->
+        <div class="section experience">
+            <h2>Work Experience</h2>
+            <div th:each="exp : ${cv.experiences}" class="experience-item">
+                <p><strong th:text="${exp.title}"></strong> | <span th:text="${exp.company}"></span></p>
+                <p th:text="'(' + ${exp.fromYear} + ' - ' + ${exp.toYear} + ')'"></p>
+                <p th:text="${exp.description}"></p>
+            </div>
+        </div>
+
+        <!-- Skills Section -->
+        <div class="section skills">
+            <h2>Skills</h2>
+            <ul class="skills-list">
+                <li th:each="skill : ${cv.skills}">
+                    <p><strong th:text="${skill.skill}"></strong></p>
+                    <div class="skill-bar">
+                        <span th:style="'width:' + ${skill.proficiency} + '%'"></span>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Languages Section -->
+        <div class="section languages">
+            <h2>Languages</h2>
+            <ul class="languages-list">
+                <li th:each="lang : ${cv.languages}">
+                    <strong th:text="${lang.language}"></strong> - <span th:text="${lang.level}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+
+<button id="downloadPdf" class="btn btn-primary">PDF'ni Yuklash</button>
+<script>
+    document.getElementById('downloadPdf').addEventListener('click', async function () {
+        const { jsPDF } = window.jspdf;
+        const pdf = new jsPDF();
+
+        // Sahifadagi elementni olish (id bo'yicha)
+        var cvContent = document.getElementById('cvContent');
+
+        // HTML elementni PDF ga yuklash
+        await pdf.html(cvContent, {
+            callback: function (pdf) {
+                pdf.save('cv.pdf'); // Fayl nomi va yuklash
+            },
+            x: 10,
+            y: 10,
+            width: 190, // Sahifani kenglik bilan moslash
+            windowWidth: 1000 // Sahifa kengligi yuklash vaqtida
+        });
+    });
+</script>
+
+
+</body>
+</html>

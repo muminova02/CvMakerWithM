@@ -1,0 +1,265 @@
+.profile-section {
+    padding: 20px;
+}
+
+.upload-section {
+    margin: 30px auto;
+    text-align: center;
+
+}
+
+#profileImage {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.input-fields {
+    flex-basis: 60%;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.row label {
+    flex-basis: 25%;
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
+.row input, .row textarea {
+
+    flex-basis: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#uploadBtn, #removeBtn {
+    margin-top: 10px;
+}
+.education-section {
+    padding: 20px;
+}
+
+.education-section h2 {
+    color: #0033cc;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.row label {
+    flex-basis: 25%;
+    margin-right: 10px;
+}
+
+.row input {
+    flex-basis: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-education-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-education-btn:hover {
+    background-color: #0056b3;
+}
+.experience-section {
+    padding: 20px;
+}
+
+.experience-section h2 {
+    color: #0033cc;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.row label {
+    flex-basis: 25%;
+    margin-right: 10px;
+}
+
+.row input, .row textarea {
+    flex-basis: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+textarea {
+    resize: none;
+    height: 80px;
+}
+
+.add-experience-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-experience-btn:hover {
+    background-color: #0056b3;
+}
+
+.skills-section {
+    padding: 20px;
+}
+
+.skills-section h2 {
+    color: #0033cc;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.row label {
+    flex-basis: 25%;
+    margin-right: 10px;
+}
+
+.row input, .row select {
+    flex-basis: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-skill-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-skill-btn:hover {
+    background-color: #0056b3;
+}
+.social-links-section {
+    padding: 20px;
+}
+
+.social-links-section h2 {
+    color: #0033cc;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.row label {
+    flex-basis: 25%;
+    margin-right: 10px;
+}
+
+.row input {
+    flex-basis: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-social-link-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-social-link-btn:hover {
+    background-color: #0056b3;
+}
+
+.languages-section {
+    padding: 20px;
+}
+
+.languages-section h2 {
+    color: #0033cc;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
+
+.row label {
+    flex-basis: 25%;
+    margin-right: 10px;
+}
+
+.row input,
+.row select {
+    flex-basis: 70%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.add-language-btn {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.add-language-btn:hover {
+    background-color: #0056b3;
+}

@@ -1,0 +1,64 @@
+### GET request to example server
+GET https://examples.http-client.intellij.net/get
+    ?generated-in=IntelliJ IDEA
+
+###
+
+http://localhost:8080/product
+Authorization: YWJyb3IxMjM=
+###
+
+http://localhost:8080/check
+Authorization: YWRtaW4tY2hh
+
+
+###
+POST http://localhost:8080/product
+Content-Type: application/json
+Authorization: YWRtaW4tY2hh
+
+{
+  "name": "iphone",
+  "description": "apple",
+  "price": 250
+}
+###
+
+PUT http://localhost:8080/product
+Content-Type: application/json
+Authorization: YWRtaW4tY2hh
+
+{
+  "name": "iphone",
+  "description": "apple",
+  "price":"250"
+}
+###
+
+DELETE http://localhost:8080/product/2
+Authorization: YWRtaW4tY2hh
+
+
+
+###
+POST http://localhost:8080/auth/sign-up
+Content-Type: application/json
+
+{
+  "name" : "abror",
+  "username": "abror123",
+  "password": "root123"
+}
+###
+
+POST http://localhost:8080/auth/sign-in
+Content-Type: application/json
+
+{
+  "username": "admin-cha",
+  "password": "root123"
+}
+###
+http://localhost:8080/check
+
+
